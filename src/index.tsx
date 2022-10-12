@@ -11,6 +11,7 @@ import Form from "./form";
 import Chart from "./chart";
 import Componnents from "./componnents";
 import NotFound from "./notfound";
+import Aspirasi from "./dashboard/aspirasi";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -19,6 +20,7 @@ ReactDOM.render(
         <Route path="/" element={<App />}>
           <Route index element={<Dashboard />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/aspirasi" element={<Aspirasi />} />
           <Route path="/forms" element={<Form />} />
           <Route path="/tables" element={<Table />} />
           <Route path="/charts" element={<Chart />} />

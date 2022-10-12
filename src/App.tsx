@@ -29,6 +29,10 @@ const navList = [
         name: "dashboard",
         route: "/dashboard",
       },
+      {
+        name: "aspirasi",
+        route: "/aspirasi",
+      },
     ],
   },
   {
