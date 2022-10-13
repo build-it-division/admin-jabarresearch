@@ -1,4 +1,4 @@
-export default interface DataAspirasi {
+export interface DataAspirasi {
     nama : string,
     email : string,
     usia : string,
@@ -12,5 +12,17 @@ export default interface DataAspirasi {
 
 export default interface Data {
     current_page: number,
-    data : DataAspirasi[]
+    data : DataAspirasi[],
+    last_page: number,
+    total: number,
 }
+
+export interface Region {
+    id : string,
+    name : string,
+  }
+  
+export interface Districts {
+    id : string,
+    name : string,
+    }

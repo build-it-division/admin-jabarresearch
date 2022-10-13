@@ -91,7 +91,7 @@ function App() {
     <div className="flex min-h-screen">
       <div className="w-64 bg-cyan-900 shrink-0">
         <div className="h-16 flex items-center justify-center shadow-md">
-          <span className="text-white text-xl font-medium">Pomegranate</span>
+          <span className="text-white text-xl font-medium">Jabar Research</span>
         </div>
         <ul className="flex flex-col text-white space-y-2 text-sm mt-4">
           {navList.map((n, i) => (
