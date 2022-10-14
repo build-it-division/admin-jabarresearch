@@ -1,8 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockClosedIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+interface Validate {
+  message : string;
+  email : [string],
+  password : [string],
+}
 
 const Signin = () => {
+
+  const loginUrl = 'https://api.jabarresearch.com/api/login';
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [validation, setValidation] = useState<Validate>();
+
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    formData.append('email', email);
+    formData.append('password', password);
+
+    await axios.post(loginUrl, formData)
+    .then((response) => {
+
+      localStorage.setItem('token', response.data.token);
+
+      navigate('/dashboard');
+    }).catch((error) => {
+        setValidation(error.response.data);
+    });
+  };
+
+  function wrapAsyncFunction<ARGS extends unknown[]>(fn: (...args: ARGS) => Promise<unknown>): (...args: ARGS) => void {
+    return (...args) => {
+      void fn(...args);
+    };
+  }
+
   return (
     <div className="grid grid-cols-2 h-screen">
       <div
@@ -34,7 +76,14 @@ const Signin = () => {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          {
+              validation?.message && (
+                  <div className="alert alert-danger">
+                      {validation?.message}
+                  </div>
+              )
+          }
+          <form className="mt-8 space-y-6" onSubmit={wrapAsyncFunction(handleLogin)}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -49,8 +98,17 @@ const Signin = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              {
+                  validation?.email && (
+                      <div className="alert alert-danger">
+                          {validation?.email[0]}
+                      </div>
+                  )
+              }
               <div>
                 <label htmlFor="password" className="sr-only">
                   Password
@@ -63,8 +121,17 @@ const Signin = () => {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
+              {
+                  validation?.email && (
+                      <div className="alert alert-danger">
+                          {validation?.password[0]}
+                      </div>
+                  )
+              }
             </div>
 
             <div className="flex items-center justify-between">

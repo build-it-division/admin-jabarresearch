@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   MenuIcon,
   HomeIcon,
@@ -12,6 +12,7 @@ import {
   LogoutIcon,
 } from "@heroicons/react/outline";
 import NavList from "./common/NavList";
+import axios from "axios";
 
 const user = {
   name: "Tom Cook",
@@ -87,6 +88,41 @@ const navList = [
   },
 ];
 function App() {
+
+  const token = localStorage.getItem('token');
+
+  const logoutUrl = 'https://api.jabarresearch.com/api/logout';
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!token) {
+      navigate('/signin');
+    }
+  }, []);
+
+  const handleLogout = async () => {
+
+    if(!token){
+      console.warn('no token');
+    } else {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+      await axios.post(logoutUrl)
+      .then(() => {
+        localStorage.removeItem('token');
+
+        navigate('/signin');
+      });
+    }
+  };
+
+  function wrapAsyncFunction<ARGS extends unknown[]>(fn: (...args: ARGS) => Promise<unknown>): (...args: ARGS) => void {
+    return (...args) => {
+      void fn(...args);
+    };
+  }
+
   return (
     <div className="flex min-h-screen">
       <div className="w-64 bg-cyan-900 shrink-0">
@@ -116,9 +152,7 @@ function App() {
             </div>
             <LogoutIcon
               className="h-6 w-6 ml-4 text-cyan-700 cursor-pointer"
-              onClick={() => {
-                console.log("logout");
-              }}
+              onClick={wrapAsyncFunction(handleLogout)}
             />
           </div>
         </div>
