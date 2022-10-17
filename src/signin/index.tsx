@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LockClosedIcon } from "@heroicons/react/outline";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Logo from '../assets/images/logo.png';
 import axios from "axios";
 
 interface Validate {
@@ -12,6 +13,10 @@ interface Validate {
 const Signin = () => {
 
   const loginUrl = 'https://api.jabarresearch.com/api/login';
+
+  const token = localStorage.getItem("token");
+
+  console.log(token);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,6 +50,12 @@ const Signin = () => {
     };
   }
 
+  useEffect(() => {
+    if(token !== null) {
+      navigate('/dashboard');
+    }
+  }, []);
+
   return (
     <div className="grid grid-cols-2 h-screen">
       <div
@@ -60,21 +71,9 @@ const Signin = () => {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-cyan-600.svg"
+              src={Logo}
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Sign in to your account
-            </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
-              Or{" "}
-              <Link
-                to="/"
-                className="font-medium text-cyan-600 hover:text-cyan-500"
-              >
-                start your 14-day free trial
-              </Link>
-            </p>
           </div>
           {
               validation?.message && (
@@ -133,33 +132,6 @@ const Signin = () => {
                   )
               }
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-
-              <div className="text-sm">
-                <Link
-                  to="/"
-                  className="font-medium text-cyan-600 hover:text-cyan-500"
-                >
-                  Forgot your password?
-                </Link>
-              </div>
-            </div>
-
             <div>
               <button
                 type="submit"

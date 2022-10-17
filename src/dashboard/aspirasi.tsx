@@ -158,6 +158,9 @@ const Aspirasi = () => {
                 Kecamatan
               </th>
               <th className="px-6 py-3 text-left text-sm font-medium text-slate-900">
+                Bidang
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-slate-900">
                 Aspirasi
               </th>
               <th className="px-6 py-3 text-left text-sm font-medium text-slate-900 rounded-tr-md">
@@ -193,6 +196,9 @@ const Aspirasi = () => {
                       return(<span key={index}>{dist.name}</span>);
                     }
                   })}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
+                  {item.bidang}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-900">
                   {item.aspirasi}
