@@ -12,10 +12,13 @@ import Chart from "./chart";
 import Componnents from "./componnents";
 import NotFound from "./notfound";
 import Aspirasi from "./dashboard/aspirasi";
+import { Provider } from "react-redux";
+import store from "./store";
 
 ReactDOM.render(
   <BrowserRouter>
     <React.StrictMode>
+      <Provider store={store}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Dashboard />} />
@@ -29,6 +32,7 @@ ReactDOM.render(
         <Route path="/signin" element={<Signin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </Provider>
     </React.StrictMode>
   </BrowserRouter>,
   document.getElementById("root")

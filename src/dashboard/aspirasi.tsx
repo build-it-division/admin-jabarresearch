@@ -1,7 +1,11 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootStore } from '../store';
 import Data, {Region, Districts} from '../types';
+import { GetInsight } from "../store/actions/InsightAction";
 
 const Aspirasi = () => {
 
@@ -62,7 +66,12 @@ const Aspirasi = () => {
           setPage(page + 1);
         };
 
-    console.log('ini data ',dataAspirasi);
+        const dispatch = useDispatch();
+        useEffect(() => {
+          dispatch(GetInsight() as any);
+        },[]);
+        const InsightState = useSelector((state: RootStore) => state.insight);
+    console.log('ini data ',InsightState);
   return (
     <> 
       <div className="grid grid-cols-4 gap-4">
