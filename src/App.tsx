@@ -113,6 +113,14 @@ function App() {
         localStorage.removeItem('token');
 
         navigate('/signin');
+      })
+      .catch(err => {
+        console.log(err.response.data.message);
+        if(err.response.data.message == 'Token has expired') {
+          localStorage.removeItem('token');
+
+          navigate('/signin');
+        }
       });
     }
   };
