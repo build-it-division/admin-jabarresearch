@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { RootStore } from '../store';
 
 import {
   AreaChart,
@@ -77,6 +79,8 @@ const data = [
 
 const Dashboard = () => {
   // const [chartType, setChartTYpe] = useState('area');
+  const InsightState = useSelector((state: RootStore) => state.insight);
+    console.log('ini data ',InsightState);
   return (
     <>
       <div className="grid grid-cols-4 gap-4">

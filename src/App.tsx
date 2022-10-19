@@ -13,6 +13,9 @@ import {
 } from "@heroicons/react/outline";
 import NavList from "./common/NavList";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { GetInsight } from "./store/actions/InsightAction";
+import { RootStore } from "./store";
 
 const user = {
   name: "Tom Cook",
@@ -130,6 +133,13 @@ function App() {
       void fn(...args);
     };
   }
+
+  const dispatch = useDispatch();
+        useEffect(() => {
+          dispatch(GetInsight() as any);
+        },[]);
+        const InsightState = useSelector((state: RootStore) => state.insight);
+    console.log('ini data ',InsightState);
 
   return (
     <div className="flex min-h-screen">

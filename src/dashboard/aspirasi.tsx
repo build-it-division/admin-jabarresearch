@@ -1,18 +1,17 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootStore } from '../store';
 import Data, {Region, Districts} from '../types';
-import { GetInsight } from "../store/actions/InsightAction";
+import CategoryBox from '../componnents/CategoryBox';
 
 const Aspirasi = () => {
 
     const [dataAspirasi, setAspirasi] = useState<Data | null>(null);
     const [dataRegion, setRegion] = useState<Region[] | []>([]);
     const [dataDistricts, setDistricts] = useState<Districts[] | []>([]);
-    const [page, setPage] = useState(2);
+    const [page, setPage] = useState(1);
 
     const aspirasiUrl = `https://api.jabarresearch.com/api/aspirasi?page=${page}`;
     const regionUrl = "https://api.jabarresearch.com/api/region";
@@ -23,7 +22,6 @@ const Aspirasi = () => {
             .get(aspirasiUrl)
             .then(response => {
                 setAspirasi(response.data);
-                console.log(response.data);
             })
             .catch(ex => {
                 ex.response.status === 404
@@ -37,7 +35,6 @@ const Aspirasi = () => {
           .get(regionUrl)
           .then(response => {
               setRegion(response.data.cities);
-              console.log(response.data.cities);
           })
           .catch(ex => {
               ex.response.status === 404
@@ -51,7 +48,6 @@ const Aspirasi = () => {
             .get(districtUrl)
             .then(response => {
                 setDistricts(response.data);
-                console.log(response.data);
             })
             .catch(ex => {
                 console.log(ex.response.status);
@@ -66,83 +62,15 @@ const Aspirasi = () => {
           setPage(page + 1);
         };
 
-        const dispatch = useDispatch();
-        useEffect(() => {
-          dispatch(GetInsight() as any);
-        },[]);
         const InsightState = useSelector((state: RootStore) => state.insight);
     console.log('ini data ',InsightState);
   return (
     <> 
       <div className="grid grid-cols-4 gap-4">
-        <div className="shadow-md h-32 bg-white rounded-md p-3 flex flex-col justify-between">
-          <div className="flex justify-between items-center">
-            <span className="text-base font-medium">Total Aspirasi</span>
-            <span className="bg-cyan-700 rounded text-gray-100 text-xs px-2 py-0.5">
-              All Time
-            </span>
-          </div>
-          <div>
-            <span className="text-2xl font-medium">{dataAspirasi?.total}</span>
-          </div>
-          <div className="flex text-sm items-center">
-            <span className="text-sm text-green-600 bg-green-100 px-1 py-0.5 rounded-md">
-              +25%
-            </span>
-            <span className="text-gray-400 ml-2">Since yesterday</span>
-          </div>
-        </div>
-        <div className="shadow-md h-32 bg-white rounded-md p-3 flex flex-col justify-between">
-          <div className="flex justify-between items-center">
-            <span className="text-base font-medium">Sales Today</span>
-            <span className="bg-cyan-700 rounded text-gray-100 text-xs px-2 py-0.5">
-              Today
-            </span>
-          </div>
-          <div>
-            <span className="text-2xl font-medium">$2345.56</span>
-          </div>
-          <div className="flex text-sm items-center">
-            <span className="text-sm text-red-600 bg-red-100 px-1 py-0.5 rounded-md">
-              -35%
-            </span>
-            <span className="text-gray-400 ml-2">Since last month</span>
-          </div>
-        </div>
-        <div className="shadow-md h-32 bg-white rounded-md p-3 flex flex-col justify-between">
-          <div className="flex justify-between items-center">
-            <span className="text-base font-medium">New Orders</span>
-            <span className="bg-cyan-700 rounded text-gray-100 text-xs px-2 py-0.5">
-              Today
-            </span>
-          </div>
-          <div>
-            <span className="text-2xl font-medium">1,236</span>
-          </div>
-          <div className="flex text-sm items-center">
-            <span className="text-sm text-green-600 bg-green-100 px-1 py-0.5 rounded-md">
-              +7%
-            </span>
-            <span className="text-gray-400 ml-2">Since yesterday</span>
-          </div>
-        </div>
-        <div className="shadow-md h-32 bg-white rounded-md p-3 flex flex-col justify-between">
-          <div className="flex justify-between items-center">
-            <span className="text-base font-medium">Visitors</span>
-            <span className="bg-cyan-700 rounded text-gray-100 text-xs px-2 py-0.5">
-              Monthly
-            </span>
-          </div>
-          <div>
-            <span className="text-2xl font-medium">156</span>
-          </div>
-          <div className="flex text-sm items-center">
-            <span className="text-sm text-red-600 bg-red-100 px-1 py-0.5 rounded-md">
-              -15%
-            </span>
-            <span className="text-gray-400 ml-2">Since yesterday</span>
-          </div>
-        </div>
+        <CategoryBox category='infrastruktur'/>
+        <CategoryBox category='ekonomi'/>
+        <CategoryBox category='kesehatan'/>
+        <CategoryBox category='pendidikan'/>
       </div> 
       <div className='w-full'> 
         <table className="w-full mt-6 shadow-md rounded-md">
@@ -220,9 +148,9 @@ const Aspirasi = () => {
           </tbody>
         </table>
         <div className='w-6/12 mt-4'>
-            {page != 1 ? (<span className='px-4 py-2 bg-teal-500 text-white rounded-sm' onClick={handlePrevPage}>prev</span>) : ''}
+            {page != 1 ? (<span className='px-4 py-2 bg-teal-500 text-white rounded-sm cursor-pointer' onClick={handlePrevPage}>prev</span>) : ''}
             <span className='mx-4'>{page}</span>
-            {page != dataAspirasi?.last_page ? (<span className='px-4 py-2 bg-teal-500 text-white rounded-sm' onClick={handleNextPage}>next</span>) : ''}
+            {page != dataAspirasi?.last_page ? (<span className='px-4 py-2 bg-teal-500 text-white rounded-sm cursor-pointer' onClick={handleNextPage}>next</span>) : ''}
         </div>
       </div>
     </>
