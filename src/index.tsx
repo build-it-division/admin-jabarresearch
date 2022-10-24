@@ -14,6 +14,7 @@ import NotFound from "./notfound";
 import Aspirasi from "./dashboard/aspirasi";
 import { Provider } from "react-redux";
 import store from "./store";
+import Question from "./table/Question";
 
 ReactDOM.render(
   <BrowserRouter>
@@ -25,7 +26,8 @@ ReactDOM.render(
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/aspirasi" element={<Aspirasi />} />
           <Route path="/forms" element={<Form />} />
-          <Route path="/tables" element={<Table />} />
+          <Route path="/insight" element={<Table />} />
+          <Route path="/question" element={<Question />}/>
           <Route path="/charts" element={<Chart />} />
           <Route path="/componnents" element={<Componnents />} />
         </Route>

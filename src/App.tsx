@@ -50,12 +50,16 @@ const navList = [
     ],
   },
   {
-    title: "Tables",
+    title: "Insight",
     icon: <TableIcon className="h-5 w-5 text-gray-100" />,
     subMenu: [
       {
-        name: "tables",
-        route: "/tables",
+        name: "Tables Insight",
+        route: "/insight",
+      },
+      {
+        name: "Question Insight",
+        route: "/question",
       },
     ],
   },
@@ -95,13 +99,14 @@ function App() {
   const token = localStorage.getItem('token');
 
   const logoutUrl = 'https://api.jabarresearch.com/api/logout';
+  //const userUrl = 'https://api.jabarresearch.com/api/user';
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if(!token) {
       navigate('/signin');
-    }
+    } 
   }, []);
 
   const handleLogout = async () => {
