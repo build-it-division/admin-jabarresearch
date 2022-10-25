@@ -1,8 +1,6 @@
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootStore } from '../store';
 import Data, {Region, Districts} from '../types';
 import CategoryBox from '../componnents/CategoryBox';
 
@@ -61,9 +59,6 @@ const Aspirasi = () => {
         const handleNextPage = () => {
           setPage(page + 1);
         };
-
-        const InsightState = useSelector((state: RootStore) => state.insight);
-    console.log('ini data ',InsightState);
   return (
     <> 
       <div className="grid grid-cols-4 gap-4">

@@ -7,7 +7,7 @@ export const GetInsight = () => {
         dispatch({type: LOADING_INSIGHT});
        axios.get('https://api.jabarresearch.com/api/insight')
        .then(response => {
-        const responseAPI = response.data as InsightType;
+        const responseAPI = response.data.data as InsightType;
 
         dispatch({type:SUCCESS_INSIGHT, payload:responseAPI});
         
