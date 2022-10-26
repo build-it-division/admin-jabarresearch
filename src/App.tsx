@@ -99,8 +99,8 @@ function App() {
   useEffect(() => {
     if(!token) {
       navigate('/signin');
-    } 
-  }, []);
+    }
+  }, [token]);
 
   const handleLogout = async () => {
 

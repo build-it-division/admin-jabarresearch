@@ -10,7 +10,7 @@ export type InsightData = {
     id : number,
     title : string,
     slug : string,
-    insight_question : InsightQuestion[]
+    insight_questions : InsightQuestion[]
 };
 
 export type InsightQuestion = {
@@ -18,7 +18,7 @@ export type InsightQuestion = {
     insight_id : number,
     content : string,
     type : string,
-    insight_answer : InsightAnswer[],
+    insight_answers : InsightAnswer[],
     insight_essay? : InsightEssay
 };
 
