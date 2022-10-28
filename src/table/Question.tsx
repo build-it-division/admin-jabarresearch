@@ -30,7 +30,12 @@ export default function Question() {
         navigate(0);
       })
       .catch( error => {
-        console.log(error);
+        console.log(error.response.data.message);
+        if(error.response.status === 401) {
+          localStorage.removeItem('token');
+
+          navigate('/signin');
+        }
       });
     } else {
       alert('no token');
