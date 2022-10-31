@@ -156,7 +156,7 @@ export default function Question() {
                   {quest.type === "polling" ? 
                   (
                   <div 
-                    className="border-[2px] border-indigo-700 w-28 pr-3 h-8 rounded-lg mb-2 hover:text-indigo-500 hover:bg-transparent bg-indigo-700 text-white cursor-pointer flex flex-row items-center justify-between"
+                    className="border-[2px] border-sky-500 w-28 pr-3 h-8 rounded-lg mb-2 hover:text-sky-500 hover:bg-transparent bg-sky-500 text-white cursor-pointer flex flex-row items-center justify-between"
                     onClick={() => addAnswer(ins.id, quest.id)}
                   >
                     <AddIcon className="ml-2 w-4 h-4"/>
