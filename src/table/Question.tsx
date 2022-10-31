@@ -5,6 +5,8 @@ import { InsightAnswer, InsightData, InsightQuestion } from "../store/actions/In
 import InsightModal from "../componnents/InsightModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { IoIosAddCircleOutline as AddIcon } from "react-icons/io";
+import InsightQuestionModal from "../componnents/InsightQuestionModal";
  
 export default function Question() {
    
@@ -15,6 +17,16 @@ export default function Question() {
   const navigate = useNavigate();
 
   const [openInsight, setOpenInsight] = useState(false);
+  const [openInsightQuestion, setOpenInsightQuestion] = useState(false);
+  const [selectedInsightId, setSelectedInsightId] = useState<number>();
+
+  const handleQuestionModal = (ins : number) => {
+    setSelectedInsightId(ins);
+    setOpenInsightQuestion(true);
+    window.scrollTo(0, 0);
+  };
+
+  console.log(openInsightQuestion);
 
   const deleteInsight = (id:number) => {
 
@@ -68,12 +80,17 @@ export default function Question() {
                 ))}
               </div>
             </div>
-          ))} 
+            ))}
+            <div className="w-full h-12 border-[1px] rounded-xl flex flex-row justify-center items-center cursor-pointer text-teal-500 hover:bg-teal-500 hover:text-white" onClick={() => handleQuestionModal(ins.id)}>
+                <AddIcon className="w-8 h-8"/>
+                <span className="mx-1 font-semibold">Add Question</span>
+            </div>
           </div>
         </div>
         ))} 
       </div>
       <InsightModal open={openInsight} close={() => setOpenInsight(false)}/>
+      <InsightQuestionModal open={openInsightQuestion} close={() => setOpenInsightQuestion(false)} insight_id={selectedInsightId}/>
     </div>
   );
 }
