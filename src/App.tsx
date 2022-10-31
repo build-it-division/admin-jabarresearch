@@ -6,9 +6,6 @@ import {
   HomeIcon,
   TableIcon,
   ChartPieIcon,
-  PencilAltIcon,
-  DocumentTextIcon,
-  TemplateIcon,
   LogoutIcon,
 } from "@heroicons/react/outline";
 import NavList from "./common/NavList";
@@ -33,16 +30,6 @@ const navList = [
     ],
   },
   {
-    title: "Forms",
-    icon: <PencilAltIcon className="h-5 w-5 text-gray-100" />,
-    subMenu: [
-      {
-        name: "forms",
-        route: "/forms",
-      },
-    ],
-  },
-  {
     title: "Insight",
     icon: <TableIcon className="h-5 w-5 text-gray-100" />,
     subMenu: [
@@ -63,26 +50,6 @@ const navList = [
       {
         name: "charts",
         route: "/charts",
-      },
-    ],
-  },
-  {
-    title: "Componnents",
-    icon: <TemplateIcon className="h-5 w-5 text-gray-100" />,
-    subMenu: [
-      {
-        name: "componnents",
-        route: "/componnents",
-      },
-    ],
-  },
-  {
-    title: "Pages",
-    icon: <DocumentTextIcon className="h-5 w-5 text-gray-100" />,
-    subMenu: [
-      {
-        name: "signin",
-        route: "/signin",
       },
     ],
   },

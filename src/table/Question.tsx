@@ -6,6 +6,7 @@ import InsightModal from "../componnents/InsightModal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoIosAddCircleOutline as AddIcon } from "react-icons/io";
+import { RiDeleteBin2Fill as DeleteIcon } from "react-icons/ri";
 import InsightQuestionModal from "../componnents/InsightQuestionModal";
  
 export default function Question() {
@@ -54,6 +55,33 @@ export default function Question() {
     }
     
   };
+
+  const deleteInsightQuestion = (id:number) => {
+
+    const deleteInsightUrl = `https://api.jabarresearch.com/api/delete/insight/question/${id}`;
+
+    if(token){
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.post(deleteInsightUrl, {
+        _method: 'delete'
+      })
+      .then( response => {
+        console.log(response);
+        navigate(0);
+      })
+      .catch( error => {
+        console.log(error.response.data.message);
+        if(error.response.status === 401) {
+          localStorage.removeItem('token');
+
+          navigate('/signin');
+        }
+      });
+    } else {
+      alert('no token');
+    }
+    
+  };
  
   return (
     <div className="w-full h-full">
@@ -66,7 +94,7 @@ export default function Question() {
           <div className="text-start">
             <div color="blue-gray" className="mb-2 text-xl font-bold">
               {ins.title}
-              <button className="btn btn-error btn-xs ml-2 text-white" onClick={() => deleteInsight(ins.id)}>Delete</button>
+              <button className="btn btn-error btn-xs ml-2 text-white hover:border-[2px] hover:bg-transparent hover:text-red-500" onClick={() => deleteInsight(ins.id)}>Delete</button>
             </div>
             {(ins.insight_questions as unknown as InsightQuestion[])?.map((quest, index) => (
             <div tabIndex={index} className="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box mb-2" key={index}>
@@ -74,6 +102,12 @@ export default function Question() {
                 {quest.content} <span className="text-teal-500">({quest.type})</span>
               </div>
               <div className="collapse-content"> 
+                <div className="border-[2px] border-red-500 w-36 pr-3 h-8 rounded-lg mb-2 text-red-500 hover:bg-red-500 hover:text-white cursor-pointer flex flex-row items-center justify-between"
+                  onClick={() => deleteInsightQuestion(quest.id)}
+                >
+                  <DeleteIcon className="ml-2"/>
+                  <span className="text-xs">Delete Question</span>
+                </div>
                 <h3 className="mb-2">Jawaban : </h3>
                 {(quest.insight_answers as unknown as InsightAnswer[])?.map((ans, index) => (
                   <h4 key={index} className="px-2 py-2 bg-grey-400 mb-2 border-2 rounded-lg">{ans.content}</h4>
