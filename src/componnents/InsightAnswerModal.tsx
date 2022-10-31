@@ -5,27 +5,25 @@ import { useNavigate } from 'react-router-dom';
 interface ModalProps {
     open: boolean,
     close : () => void,
-    insight_id : number | undefined,
+    idForAnswer : {
+        insight_id : number,
+        insight_question_id : number
+    }
 }
 
-const InsightQuestionModal = (props : ModalProps) => {
+const InsightAnswerModal = (props : ModalProps) => {
 
-    const InsightUrl = 'https://api.jabarresearch.com/api/insight/createQuestion';
+    const InsightUrl = 'https://api.jabarresearch.com/api/insight/createAnswer';
     const token = localStorage.getItem('token');
 
     const navigate = useNavigate();
 
-    const { open, close, insight_id } = props;
+    const { open, close, idForAnswer } = props;
 
     console.log(props);
 
     const [content , setContent] = useState('');
-    const [type , setType] = useState('polling');
     const [loading, setLoading] =  useState(false);
-
-    const handleType = (e:any) => {
-        setType(e.target.value);
-    };
 
     const handleInput = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -34,8 +32,8 @@ const InsightQuestionModal = (props : ModalProps) => {
         const formData = new FormData();
     
         formData.append('content', content);
-        formData.append('insight_id', JSON.stringify(insight_id));
-        formData.append('type', type);
+        formData.append('insight_id', JSON.stringify(idForAnswer.insight_id));
+        formData.append('insight_question_id', JSON.stringify(idForAnswer.insight_question_id));
         
         if(!token){
             console.log("no token");
@@ -69,33 +67,9 @@ if(open){
             <div className='absolute w-4/12 h-72 bg-white top-[40%] left-[35%] p-5 rounded-xl'>
             <form className="form-control w-full" onSubmit={wrapAsyncFunction(handleInput)}>
                 <label className="label">
-                    <span className="label-text">Masukkan Pertanyaan</span>
+                    <span className="label-text">Masukkan Jawaban</span>
                 </label>
                 <input type="text" placeholder="ketik disini" className="input input-bordered w-full mb-2 h-10" onChange={(e) => setContent(e.target.value)} value={content}/>
-                <label className="label">
-                    <span className="label-text">Pilih Tipe Pertanyaan</span>
-                </label>
-                <select className="form-select appearance-none
-              block
-              w-4/12
-              px-3
-              py-1.5
-              text-base
-              font-normal
-              text-gray-700
-              bg-white bg-clip-padding bg-no-repeat
-              border border-solid border-gray-300
-              rounded
-              transition
-              ease-in-out
-              mb-4
-              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-              aria-label="Default select example"
-              onChange={(e) => handleType(e)}
-              >
-                <option value='polling'>Polling</option>
-                <option value='essay'>Essay</option>
-            </select>
                 {loading == false ? (<div className='flex flex-row'>
                     <button className="btn bg-teal-500 border-0 text-white w-2/12 mr-2" type='submit'>Kirim</button>
                     <button className="btn btn-active btn-error text-white w-2/12" onClick={close}>Batal</button>
@@ -111,4 +85,4 @@ if(open){
   
 };
 
-export default InsightQuestionModal;
+export default InsightAnswerModal;

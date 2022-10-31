@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { IoIosAddCircleOutline as AddIcon } from "react-icons/io";
 import { RiDeleteBin2Fill as DeleteIcon } from "react-icons/ri";
 import InsightQuestionModal from "../componnents/InsightQuestionModal";
+import InsightAnswerModal from "../componnents/InsightAnswerModal";
  
 export default function Question() {
    
@@ -18,8 +19,13 @@ export default function Question() {
   const navigate = useNavigate();
 
   const [openInsight, setOpenInsight] = useState(false);
+  const [openInsightAnswer, setOpenInsightAnswer] = useState(false);
   const [openInsightQuestion, setOpenInsightQuestion] = useState(false);
   const [selectedInsightId, setSelectedInsightId] = useState<number>();
+  const [idForAnswer, setidForAnswer] = useState({
+    insight_id : 0,
+    insight_question_id : 0
+  });
 
   const handleQuestionModal = (ins : number) => {
     setSelectedInsightId(ins);
@@ -82,6 +88,16 @@ export default function Question() {
     }
     
   };
+
+  const addAnswer = (insightId : number, questionId : number) => {
+    setidForAnswer({
+      insight_id : insightId,
+      insight_question_id : questionId,
+    });
+    setOpenInsightAnswer(true);
+  };
+
+  console.log(idForAnswer);
  
   return (
     <div className="w-full h-full">
@@ -102,11 +118,25 @@ export default function Question() {
                 {quest.content} <span className="text-teal-500">({quest.type})</span>
               </div>
               <div className="collapse-content"> 
-                <div className="border-[2px] border-red-500 w-36 pr-3 h-8 rounded-lg mb-2 text-red-500 hover:bg-red-500 hover:text-white cursor-pointer flex flex-row items-center justify-between"
-                  onClick={() => deleteInsightQuestion(quest.id)}
-                >
-                  <DeleteIcon className="ml-2"/>
-                  <span className="text-xs">Delete Question</span>
+                <div className="flex flex-row">
+                  <div className="border-[2px] mr-2 border-red-500 w-[135px] pr-3 h-8 rounded-lg mb-2 text-red-500 hover:bg-red-500 hover:text-white cursor-pointer flex flex-row items-center justify-between"
+                    onClick={() => deleteInsightQuestion(quest.id)}
+                  >
+                    <DeleteIcon className="ml-2"/>
+                    <span className="text-xs">Delete Question</span>
+                  </div>
+
+                  {quest.type === "polling" ? 
+                  (
+                  <div 
+                    className="border-[2px] border-indigo-700 w-28 pr-3 h-8 rounded-lg mb-2 hover:text-indigo-500 hover:bg-transparent bg-indigo-700 text-white cursor-pointer flex flex-row items-center justify-between"
+                    onClick={() => addAnswer(ins.id, quest.id)}
+                  >
+                    <AddIcon className="ml-2 w-4 h-4"/>
+                    <span className="text-xs">Add Answer</span>
+                  </div>
+                  ) : "" }
+                  
                 </div>
                 <h3 className="mb-2">Jawaban : </h3>
                 {(quest.insight_answers as unknown as InsightAnswer[])?.map((ans, index) => (
@@ -124,6 +154,7 @@ export default function Question() {
         ))} 
       </div>
       <InsightModal open={openInsight} close={() => setOpenInsight(false)}/>
+      <InsightAnswerModal open={openInsightAnswer} close={() => setOpenInsightAnswer(false)} idForAnswer={idForAnswer}/>
       <InsightQuestionModal open={openInsightQuestion} close={() => setOpenInsightQuestion(false)} insight_id={selectedInsightId}/>
     </div>
   );
