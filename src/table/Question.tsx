@@ -89,6 +89,33 @@ export default function Question() {
     
   };
 
+  const deleteInsightAnswer = (id:number) => {
+
+    const deleteInsightUrl = `https://api.jabarresearch.com/api/delete/insight/answer/${id}`;
+
+    if(token){
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      axios.post(deleteInsightUrl, {
+        _method: 'delete'
+      })
+      .then( response => {
+        console.log(response);
+        navigate(0);
+      })
+      .catch( error => {
+        console.log(error.response.data.message);
+        if(error.response.status === 401) {
+          localStorage.removeItem('token');
+
+          navigate('/signin');
+        }
+      });
+    } else {
+      alert('no token');
+    }
+    
+  };
+
   const addAnswer = (insightId : number, questionId : number) => {
     setidForAnswer({
       insight_id : insightId,
@@ -140,7 +167,12 @@ export default function Question() {
                 </div>
                 <h3 className="mb-2">Jawaban : </h3>
                 {(quest.insight_answers as unknown as InsightAnswer[])?.map((ans, index) => (
-                  <h4 key={index} className="px-2 py-2 bg-grey-400 mb-2 border-2 rounded-lg">{ans.content}</h4>
+                  <div key={index} className="px-4 py-2 bg-grey-400 mb-2 border-2 rounded-lg flex flex-row justify-between items-center">
+                    <h4>{ans.content}</h4>
+                    <div onClick={() => deleteInsightAnswer(ans.id)} className="cursor-pointer">
+                      <DeleteIcon className="w-6 h-6 text-red-500"/>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
