@@ -66,7 +66,10 @@ const Aspirasi = () => {
         <CategoryBox category='ekonomi'/>
         <CategoryBox category='kesehatan'/>
         <CategoryBox category='pendidikan'/>
-      </div> 
+      </div>
+      <div className='mt-4'>
+      <a className="btn btn-accent text-white" href='https://api.suarajabar.co.id/api/export/aspirasi/excel'>Export Excel</a>
+      </div>
       <div className='w-full'> 
         <table className="w-full mt-6 shadow-md rounded-md">
           <thead className="bg-slate-50 border-b border-slate-200">
