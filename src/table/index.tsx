@@ -58,12 +58,11 @@ const Table = () => {
     <div className="grid grid-cols-1 gap-4">
       <div>
         <div className='w-6/12 mt-4'>
-        <div className="mb-3 xl:w-96">
+        <div className="mb-3 xl:w-full flex flex-row">
           <select className="form-select appearance-none
             block
-            w-full
+            w-6/12
             px-3
-            py-1.5
             text-base
             font-normal
             text-gray-700
@@ -82,7 +81,10 @@ const Table = () => {
                 <option value= {`/`+ins.title} key={index}>{ins.title}</option>
               ))}   
           </select>
-  </div>
+          <div className="ml-2">
+          <a className="btn btn-accent text-white" href='https://api.suarajabar.co.id/api/export/aspirasi/excel'>Export Excel</a>
+          </div>
+        </div>
         </div>
         <table className="shadow-md rounded-md table-fixed">
           <thead className="bg-slate-50 border-b border-slate-200">
