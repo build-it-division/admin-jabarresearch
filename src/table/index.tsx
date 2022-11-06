@@ -82,7 +82,7 @@ const Table = () => {
               ))}   
           </select>
           <div className="ml-2">
-          <a className="btn btn-accent text-white" href='https://api.suarajabar.co.id/api/export/aspirasi/excel'>Export Excel</a>
+          <a className="btn btn-accent text-white" href='https://api.jabarresearch.com/api/export/insightresult/excel'>Export Excel</a>
           </div>
         </div>
         </div>
